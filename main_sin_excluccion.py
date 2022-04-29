@@ -2,37 +2,32 @@ import random
 import threading
 import time
 
-critical_variable = 0
+variable_critica = 0
 
 
-def func_to_run():
-    global critical_variable
-    thread_id = threading.current_thread().ident
+def funcion_a_correr(id_hebra):
+    global variable_critica
 
-    print(f"{critical_variable}, ID: {thread_id} \n", end="")
-
+    print(f"ID: {id_hebra} | START | Variable Critica: {variable_critica} \n", end="")
     time.sleep(random.randint(0, 2))
 
-    local_read = critical_variable
-
+    variable_local = variable_critica
     time.sleep(random.randint(0, 2))
 
-    local_read += 1
-
+    variable_local += 1
     time.sleep(random.randint(0, 2))
 
-    critical_variable = local_read
-
+    variable_critica = variable_local
     time.sleep(random.randint(0, 2))
 
-    print(f"{critical_variable}, ID: {thread_id} \n", end="")
+    print(f"ID: {id_hebra} | END | Variable Critica: {variable_critica} \n", end="")
 
 
 if __name__ == '__main__':
-    t1 = threading.Thread(target=func_to_run)
-    t2 = threading.Thread(target=func_to_run)
-    t3 = threading.Thread(target=func_to_run)
+    h1 = threading.Thread(target=funcion_a_correr, args=[0])
+    h2 = threading.Thread(target=funcion_a_correr, args=[1])
+    h3 = threading.Thread(target=funcion_a_correr, args=[2])
 
-    t1.start()
-    t2.start()
-    t3.start()
+    h1.start()
+    h2.start()
+    h3.start()

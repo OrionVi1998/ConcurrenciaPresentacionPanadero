@@ -2,61 +2,57 @@ import random
 import threading
 import time
 
-critical_variable = 0
-entering = [False, False, False]
-turn_number = [0, 0, 0]
+variable_critica = 0
+entrando = [False, False, False]
+numero_de_turno = [0, 0, 0]
 
 
-def entrance_protocol(thread_id):
-    entering[thread_id] = True
-    turn_number[thread_id] = 1 + max(turn_number)
-    entering[thread_id] = False
+def protocolo_de_entrada(id_hebra):
+    entrando[id_hebra] = True
+    numero_de_turno[id_hebra] = 1 + max(numero_de_turno)
+    entrando[id_hebra] = False
 
-    for j in range(len(entering)):
-        while entering[j]:
+    for j in range(len(entrando)):
+        while entrando[j]:
             pass
-        while turn_number[j] != 0 and (turn_number[j] < turn_number[thread_id] or (
-                turn_number[j] == turn_number[thread_id] and j < thread_id)):
+        while numero_de_turno[j] != 0 and (numero_de_turno[j] < numero_de_turno[id_hebra] or (
+                numero_de_turno[j] == numero_de_turno[id_hebra] and j < id_hebra)):
             pass
 
 
-def critical_section(thread_id):
-    global critical_variable
+def sec_critica(id_hebra):
+    global variable_critica
 
-    print(f"{critical_variable}, ID: {thread_id} \n", end="")
-
+    print(f"ID: {id_hebra} | START | Variable Critica: {variable_critica} \n", end="")
     time.sleep(random.randint(0, 2))
 
-    local_read = critical_variable
-
+    variable_local = variable_critica
     time.sleep(random.randint(0, 2))
 
-    local_read += 1
-
+    variable_local += 1
     time.sleep(random.randint(0, 2))
 
-    critical_variable = local_read
-
+    variable_critica = variable_local
     time.sleep(random.randint(0, 2))
 
-    print(f"{critical_variable}, ID: {thread_id} \n", end="")
+    print(f"ID: {id_hebra} | END | Variable Critica: {variable_critica} \n", end="")
 
 
-def exit_protocol(thread_id):
-    turn_number[thread_id] = 0
+def protocolo_de_sailda(id_hebra):
+    numero_de_turno[id_hebra] = 0
 
 
-def func_to_run(thread_id):
-    entrance_protocol(thread_id)
-    critical_section(thread_id)
-    exit_protocol(thread_id)
+def funcion_a_correr(id_hebra):
+    protocolo_de_entrada(id_hebra)
+    sec_critica(id_hebra)
+    protocolo_de_sailda(id_hebra)
 
 
 if __name__ == '__main__':
-    t1 = threading.Thread(target=func_to_run, args=[0])
-    t2 = threading.Thread(target=func_to_run, args=[1])
-    t3 = threading.Thread(target=func_to_run, args=[2])
+    h1 = threading.Thread(target=funcion_a_correr, args=[0])
+    h2 = threading.Thread(target=funcion_a_correr, args=[1])
+    h3 = threading.Thread(target=funcion_a_correr, args=[2])
 
-    t1.start()
-    t2.start()
-    t3.start()
+    h1.start()
+    h2.start()
+    h3.start()
