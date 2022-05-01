@@ -5,7 +5,7 @@ import time
 variable_critica = 0
 
 
-def funcion_a_correr(id_hebra):
+def func_a_correr(id_hebra):
     global variable_critica
 
     print(f"ID: {id_hebra} | START | Variable Critica: {variable_critica} \n", end="")
@@ -24,9 +24,9 @@ def funcion_a_correr(id_hebra):
 
 
 if __name__ == '__main__':
-    h1 = threading.Thread(target=funcion_a_correr, args=[0])
-    h2 = threading.Thread(target=funcion_a_correr, args=[1])
-    h3 = threading.Thread(target=funcion_a_correr, args=[2])
+    h1 = threading.Thread(target=func_a_correr, args=[0])
+    h2 = threading.Thread(target=func_a_correr, args=[1])
+    h3 = threading.Thread(target=func_a_correr, args=[2])
 
     h1.start()
     h2.start()
