@@ -23,7 +23,8 @@ def protocolo_de_entrada(id_hebra):
         while entrando[j]:
             pass
 
-        # Si el proceso j tiene un número de turno Y el número del proceso j es menor al número de turno de este proceso
+        # Si el proceso j tiene un número de turno Y
+        # el número del proceso j es menor al número de turno de este proceso
         while numero_de_turno[j] != 0 and (numero_de_turno[j] < numero_de_turno[id_hebra] or (
 
                 # Si el número de turno del proceso j es igual al número de turno de este proceso
@@ -32,7 +33,7 @@ def protocolo_de_entrada(id_hebra):
             pass
 
 
-def sec_critica(id_hebra):
+def sec_critica():
     global variable_critica
 
     time.sleep(random.randint(0, 2))
@@ -47,26 +48,26 @@ def sec_critica(id_hebra):
     time.sleep(random.randint(0, 2))
 
 
-def protocolo_de_sailda(id_hebra):
+def protocolo_de_salida(id_hebra):
     # El numero de turno del proceso vuelve a 0
     numero_de_turno[id_hebra] = 0
 
 
-def funcion_a_correr(id_hebra):
+def func_a_correr(id_hebra):
     print(f"ID: {id_hebra} | START | Variable Critica: {variable_critica} \n", end="")
     time.sleep(random.randint(0, 2))
 
     protocolo_de_entrada(id_hebra)
-    sec_critica(id_hebra)
-    protocolo_de_sailda(id_hebra)
+    sec_critica()
+    protocolo_de_salida(id_hebra)
 
     print(f"ID: {id_hebra} | END | Variable Critica: {variable_critica} \n", end="")
 
 
 if __name__ == '__main__':
-    h1 = threading.Thread(target=funcion_a_correr, args=[0])
-    h2 = threading.Thread(target=funcion_a_correr, args=[1])
-    h3 = threading.Thread(target=funcion_a_correr, args=[2])
+    h1 = threading.Thread(target=func_a_correr, args=[0])
+    h2 = threading.Thread(target=func_a_correr, args=[1])
+    h3 = threading.Thread(target=func_a_correr, args=[2])
 
     h1.start()
     h2.start()
