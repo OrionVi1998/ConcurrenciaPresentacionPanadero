@@ -1,5 +1,5 @@
-import random
 import threading
+import random
 import time
 
 variable_critica = 0
@@ -10,10 +10,8 @@ numero_de_turno = [0, 0, 0]
 def protocolo_de_entrada(id_hebra):
     # Proceso entrando
     entrando[id_hebra] = True
-
     # Calcula el numero del turno
     numero_de_turno[id_hebra] = 1 + max(numero_de_turno)
-
     # Proceso consiguió turno
     entrando[id_hebra] = False
 
@@ -38,12 +36,15 @@ def sec_critica():
 
     time.sleep(random.randint(0, 2))
 
+    # LEER
     variable_local = variable_critica
     time.sleep(random.randint(0, 2))
 
+    # INCREMENTAR
     variable_local += 1
     time.sleep(random.randint(0, 2))
 
+    # GUARDAR
     variable_critica = variable_local
     time.sleep(random.randint(0, 2))
 

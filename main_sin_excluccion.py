@@ -1,5 +1,5 @@
-import random
 import threading
+import random
 import time
 
 variable_critica = 0
@@ -11,12 +11,15 @@ def func_a_correr(id_hebra):
     print(f"ID: {id_hebra} | START | Variable Critica: {variable_critica} \n", end="")
     time.sleep(random.randint(0, 2))
 
+    # LEER
     variable_local = variable_critica
     time.sleep(random.randint(0, 2))
 
+    # INCREMENTAR
     variable_local += 1
     time.sleep(random.randint(0, 2))
 
+    # GUARDAR
     variable_critica = variable_local
     time.sleep(random.randint(0, 2))
 
